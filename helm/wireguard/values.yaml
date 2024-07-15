@@ -44,7 +44,8 @@ wireguard:
   # -- Add the serverCidr to the nat source net option
   natAddSourceNet: true
   # -- A collection of clients that will be added to wg0.conf, accepts objects with keys PublicKey and AllowedIPs (mandatory) and optional FriendlyName or FriendlyJson (https://github.com/MindFlavor/prometheus_wireguard_exporter#friendly-tags) and PersistentKeepalive (https://www.wireguard.com/quickstart/#nat-and-firewall-traversal-persistence), stored in secret
-  clients: []
+  clients:
+    []
     # - FriendlyName: username1
     #   ## FriendlyJson will override FriendlyName
     #   # FriendlyJson:
@@ -76,6 +77,7 @@ service:
   annotations: {}
   # -- Extra ports that can be attached to the service object, these are passed directly to the port array on the service and must be well formed to the specification
   extraPorts: []
+  externalIP:
 # -- Name of a secret with a wireguard private key on key privatekey, if not provided on first install a hook generates one.
 secretName: ~
 replicaCount: 3
@@ -148,10 +150,12 @@ affinity:
             role: vpn
         topologyKey: kubernetes.io/hostname
 # -- Set pod nodeSelector, a simplified version of affinity
-nodeSelector: {}
+nodeSelector:
+  {}
   # example.com/vpn: ""
 # -- Set pod tolerations
-tolerations: []
+tolerations:
+  []
   # - effect: NoSchedule
   #   operator: Exists
 
@@ -252,7 +256,8 @@ metrics:
     labels:
       grafana_dashboard: "1"
     # -- Grafana dashboard annotations
-    annotations: {}
+    annotations:
+      {}
       # k8s-sidecar-target-directory: /tmp/dashboards/Other
 ## Health sidecar configuration
 healthSideCar:
